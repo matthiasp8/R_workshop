@@ -1,7 +1,6 @@
 # learn some R basics
 # mpr09
 
-
 library("reshape2")
 library("tidyverse")
 library("textshape")
@@ -143,7 +142,6 @@ tab_long   %>%
   colSums()
 
 # |>
-
 
 
 # introduction to ggplot2 - I need to adopt this
