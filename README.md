@@ -1,1 +1,1 @@
-# R_lecture
+# R workshop at IMOBAs
