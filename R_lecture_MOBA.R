@@ -1,10 +1,8 @@
-# learn some R basics
+# learn some R and ggplot2 basics
 # mpr09
-
 
 library("reshape2")
 library("tidyverse")
-library("textshape")
 
 ###############
 # first basics
@@ -144,8 +142,35 @@ tab_long   %>%
 
 # |>
 
+################
+# summarize data
+###############
 
-# introduction to ggplot2 - I need to adopt this
+head(iris_long)
+
+# summarize iris_long data frame
+iris_long %>%
+  summarise(n = n(), mean = mean(value), maximum = max(value))
+
+##statistics by Species
+iris_long %>%
+  group_by(Species) %>%
+  summarise(n = n(), mean = mean(value), maximum = max(value))
+
+##statistics by Species and variable
+iris_long %>%
+  group_by(Species, variable) %>%
+  summarise(n = n(), mean = mean(value), maximum = max(value))
+
+# add statistics etc. to the full table
+iris_long %>% 
+  group_by(Species, variable) %>% 
+  mutate(mean = mean(value))
+
+
+##########################
+# introduction to ggplot2
+##########################
 
 library(ggplot2)
 ggplot(iris, aes(x=Sepal.Length, y= Sepal.Width, color=Species)) + geom_point()
