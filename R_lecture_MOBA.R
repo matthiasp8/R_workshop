@@ -88,23 +88,28 @@ names(mixed_list) <- c("matrix", "same_matrix", "data_frame")
 mixed_list
 
 #in general: read files
-read.csv ...
+phenotypes <- read.csv2("/data/orga/MOBAcourses/220919_ggplot2_introduction/phenotypes.csv", row.names=1)
 
 # data sets implemented in R
 data()
 head(iris)
 str(iris)
 
-###
-# Task?
-##
+########
+# Task
+########
 
 
 ##########################
 # convert data structures
 ##########################
 
-#convert matrix into long format (needed for ggplot2)
+# melt - convert data into long format
+head(french_fries)
+melt(french_fries, id.vars = c("time", "treatment", "subject", "rep"))
+melt(french_fries, measure.vars = c("potato", "buttery", "grassy", "rancid", "painty"))
+
+# melt for m
 tab_long <- melt(m)
 tab_long
 class(tab_long)
@@ -131,7 +136,7 @@ x
 ###########
 
 ##################
-#how to use pipes
+#how to use pipes (pipes make sense if different functions are applied to one data object) 
 ##################
 
 tab_long   %>% 
@@ -168,31 +173,80 @@ iris_long %>%
   mutate(mean = mean(value))
 
 
-##########################
-# introduction to ggplot2
-##########################
+# Standard R plot function
+plot(x=iris$Sepal.Length, y= iris$Sepal.Width)
 
-library(ggplot2)
-ggplot(iris, aes(x=Sepal.Length, y= Sepal.Width, color=Species)) + geom_point()
+###################
+# ggplot2
+####################
 
-#webpage with graphics
-#example plot
+###########
+# reminder - make a plot object, add aestetics and save the object as p (see ggplot_introduction.R)
+#############
+
+p <- iris %>% ggplot(aes(x=Species, y=Petal.Width, color=Petal.Length, size=Sepal.Length))
+
+# add geom and plot p
+p + geom_point()
 
 
+##########
+#  add more layers
+#################
+
+p + geom_violin() + geom_jitter(width = 0.2, size = 4, alpha = 0.6)
+
+######
+# save plot
+######
+
+ggsave(filename = "test.pdf", width = 10, height = 6)
+browseURL("test.pdf")
+
+
+########################
+#make individual plots
+#######################
+# google
+# https://r-graph-gallery.com/
+# https://r-charts.com/
+# https://www.rstudio.com/resources/cheatsheets/
+# https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf
 
 #################
-#task: make this plot:
+#Tasks: 
+#################
+
+# heatmaps
+library(pheatmap)
+pheatmap(m)
+
+m %>% melt() %>% 
+  ggplot(aes(x=Var1 ,y=Var2 , fill=value)) + geom_tile()
+
+#make this plot:
 iris_long <- melt(iris)
-ggplot(iris_long, aes(x=Species, y= value, color=variable)) + geom_jitter() + theme_classic()
+iris_long %>% ggplot(aes(x=Species, y= value, color=variable)) + geom_jitter() + theme_classic()
+
+
+iris %>% ggplot(aes(x=Petal.Length, y=Petal.Width)) + geom_tile()
+
+#############
+#excursion - statistics using ggpubr
+##############
+library("ggpubr")
+
+my_comparisons <- list( c("0", "1"), c("1", "2"), c("0", "2") )
+phenotypes %>%
+  drop_na() %>%
+  ggboxplot(x = "Margin.0_1_2", y = "Survival.24", color="Margin.0_1_2",
+            palette = "jco")+ 
+  stat_compare_means(comparisons = my_comparisons)+ # Add pairwise comparisons p-value
+  stat_compare_means(label.y = 150)     # Add global p-value
+
+
 
 #if there is time: left: (t,l,s)apply
 
 
-# basic R cheatsheet:
-#https://raw.githubusercontent.com/rstudio/cheatsheets/main/base-r.pdf
-
-#more cheatsheets
-#https://www.rstudio.com/resources/cheatsheets/
-
-
-#extra lecture: stats in R - (t,l,s)apply, linear regression, define functions etc.
+#topics for future: stats in R - (t,l,s)apply, linear regression, define functions etc.
