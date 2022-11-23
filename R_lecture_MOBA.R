@@ -1,4 +1,4 @@
-# learn some R and ggplot2 basics
+# R basics with focus on data handling and ggplot2
 # mpr09
 
 library("reshape2")
@@ -18,20 +18,20 @@ x
 y <- c("a", "b", "c")
 y
 
-#functions - round brackets
+# functions (round brackets)
 log2(x)
 mean(x)
 median(x)
 summary(x)
 
-#get help
+# get help
 ?mean
 
-#vector classes
+# vector classes
 class(x)
 class(y)
 
-#change class
+# change class
 as.numeric(x)
 as.integer(x)
 as.character(x)
@@ -52,33 +52,36 @@ m
 rownames(m) <- LETTERS[1:5]
 m
 
-#functions for matrices
+# functions for matrices
 rowSums(m)
 colSums(m)
 colMeans(m)
-#functions depend on the class
 
-#apply function
+# different functions take different classes:
+?colnames()
+?mean()
+
+# apply function
 apply(m,2,mean)
 colMeans(m)
 #apply can be also used for more fancy calculations - another lesson
 
-#matrix subsetting
-#second column
+# matrix subsetting
+# second column
 m[,2]
 #third row
 m[3,]
-#number in third row and first column
+# number in third row and first column
 m[3,1]
 
-#data.frame - table with mixed classes
+# data.frame - table with mixed classes
 df <- data.frame(m, characters = letters[1:5], factor = as.factor(c("A", "A", "B", "C", "C")))
 df
 str(df)
 head(df)
 tail(df)
 
-#list of matrices
+# list of matrices
 matrix_list <- list(m,m)
 names(matrix_list) <- c("matrix", "same_matrix")
 matrix_list
@@ -87,7 +90,11 @@ mixed_list <- list(m,m, df)
 names(mixed_list) <- c("matrix", "same_matrix", "data_frame")
 mixed_list
 
-#in general: read files
+##############
+# load data
+###############
+
+# in general: read files
 phenotypes <- read.csv2("/data/orga/MOBAcourses/220919_ggplot2_introduction/phenotypes.csv", row.names=1)
 
 # data sets implemented in R
@@ -131,6 +138,26 @@ x<-reshape(tab_long, idvar = "Var1", timevar = "Var2", direction = "wide")
 x
 #reshape(tab_long, idvar = "Var2", timevar = "Var1", direction = "wide")
 
+#########################
+# some more usefull functions to prepare data for ggplot2
+##########################
+
+# convert several columns as factors - e.g. if there are "numeric data" that are actually not numeric
+phenotypes <- phenotypes %>% mutate_at(vars(Colony.size.1_4,Margin.0_1_2), as.factor)
+str(phenotypes)
+
+# remove NAs
+sum(is.na(phenotypes$Margin.0_1_2))
+phenotypes <- phenotypes %>% drop_na()
+sum(is.na(phenotypes$Margin.0_1_2))
+
+# reorder factors
+iris %>% ggplot(aes(x=Species, y=Petal.Width, color=Petal.Length, size=Sepal.Length)) + geom_point()
+
+str(iris)
+iris_reordered <- iris %>% mutate(Species = factor(Species, levels=c("virginica", "versicolor","setosa"))) 
+str(iris_reordered)
+
 ##########
 # Task
 ###########
@@ -145,13 +172,13 @@ tab_long   %>%
   as.matrix() %>% 
   colSums()
 
-# |>
+# base R pipe: |>
 
 ################
 # summarize data
 ###############
 
-head(iris_long)
+iris_long <- melt(iris)
 
 # summarize iris_long data frame
 iris_long %>%
@@ -172,9 +199,18 @@ iris_long %>%
   group_by(Species, variable) %>% 
   mutate(mean = mean(value))
 
+########################################
+# some plot functions outside of ggplot2
+#####################################
 
 # Standard R plot function
 plot(x=iris$Sepal.Length, y= iris$Sepal.Width)
+
+
+# heatmaps
+library(pheatmap)
+pheatmap(m)
+
 
 ###################
 # ggplot2
@@ -213,23 +249,14 @@ browseURL("test.pdf")
 # https://www.rstudio.com/resources/cheatsheets/
 # https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf
 
+
 #################
 #Tasks: 
 #################
 
-# heatmaps
-library(pheatmap)
-pheatmap(m)
-
-m %>% melt() %>% 
-  ggplot(aes(x=Var1 ,y=Var2 , fill=value)) + geom_tile()
-
-#make this plot:
-iris_long <- melt(iris)
-iris_long %>% ggplot(aes(x=Species, y= value, color=variable)) + geom_jitter() + theme_classic()
+# to do: make some plots using the links above and show them as tasks
 
 
-iris %>% ggplot(aes(x=Petal.Length, y=Petal.Width)) + geom_tile()
 
 #############
 #excursion - statistics using ggpubr
