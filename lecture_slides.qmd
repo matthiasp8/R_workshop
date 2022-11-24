@@ -1,0 +1,209 @@
+---
+title: "Introduction to R. iMOBAs 2022"
+author: "BioinfMOBA"
+format: revealjs
+---
+
+## Arithmetic Operations
+
+There are several important arithmetic operations defined in R: 
+
+```{r}
+#| echo: true
+#| eval: false
+
++ x
+- x
+x + y 
+x - y 
+x * y
+x / y
+x^y
+x %% y
+x %/% y
+```
+
+**Q**: In your *console* type this expression. What is the result?
+
+```{r}
+#| echo: true
+#| eval: false
+#| label: operators_usage
+
+(- 1 + (29 - 58)) * (1 / 30) / -9999.921^0
+```
+**Q**: Arithmetic operations are *unary* and *binary*. What are those?
+
+
+## Arithmetic Operations
+
+These two operations, called *modulo division* (`%%`) and *integer division* (`%/%`) might be new for you. 
+
+Can you explain the results returned (try it into your console)?
+
+```{r}
+#| echo: true
+#| eval: false
+5  %% 3
+8  %% 3
+11 %% 3
+```
+
+And what if we replace *modulo division* by *integer division*? 
+
+```{r}
+#| echo: true
+#| eval: false
+5  %/% 3
+8  %/% 3
+11 %/% 3
+```
+
+Got stuck? There is a hint:
+
+```{r}
+#| echo: true
+#| eval: false
+3 %%  3
+3 %/% 3
+```
+
+
+## Variables
+
+Think about the variable as a cell, or basket *where you store the data*. Well, really it's a *name* you choose to call a *memory slot* where your data stored. *Pointer* if it makes a point?
+
+We can perform all the mentioned arithmetic operations on variables, as we did with numbers above, and *store* the results to *the same* or *other* variables
+
+```{r}
+#| echo: true
+#| eval: false
+
+x <- 5  %% 3
+y <- x
+x <- (x + y)^3
+y <- y - 1
+z <- x * y
+```
+
+**Q**: What is the value of `z`?
+
+## Vectors: Introduction
+
+Think about the *vectors* as a contiguous cells for storing the data. 
+
+Important note: all the elements of the vector must be of the same *class*.
+
+```{r}
+#| echo: true
+#| eval: false
+apples <- c('🍎', '🍎', '🍎')
+oanges <- c('🍋', '🍋', '🍋')
+```
+
+You can't compare apples with oranges. This is why you can't store different types in the same vector!
+
+**Q**: Using the syntax for fruits, make a vector of few `\U1F680` elements.
+
+## Vectors: Indexing
+
+Each element of the vector, can be accessed by the *index* pointing to the *location* of the element. Try it by your own:
+
+```{r}
+#| echo: true
+#| eval: false
+fbn <- c(1, 1, 2, 3, 5, 8, 13)
+
+fbn[4]
+fbn[2:5]
+fbn[7:1]
+fbn <- fbn[-2]
+```
+
+**Q**: The murderer terrorizes your neighborhood. Every night going out, you are checking the content of your handbag. There is one thing which definitely won't help you to defend yourself. Remove it from your handbag.
+
+```{r}
+#| echo: true
+#| eval: false
+handbag <- c('\U1F5E1', '\U1F528', '\U1F36D', '\U1F4A3')
+```
+
+::: footer
+R uses *one-based* indexing, i.e. we start counting from `1`.
+:::
+
+## Vectors: Em ain't not for numbers only!
+
+We can store other things in vectors: `character`s, `boolean`s, `complex` numbers, `function`s - you name it!
+
+```{r}
+#| echo: true
+#| eval: false
+
+nums  <- c(1, -1, 1, -1, 1, -1)
+chars <- c('a', 'b', 'c', '\U1F353', 'I am a string', '\U1F3F4', '', NA_character_)
+bools <- c(TRUE, FALSE, TRUE, TRUE, TRUE == FALSE)
+z     <- complex(real = 1:3, imaginary = 2:4)
+funcs <- c(`+`, `-`, c, length)
+```
+
+**Q**: What is the output of `funcs[[2]](nums)`? 
+
+## Vectors: length, c
+
+Vector is an *object*, or simply a data structure with *methods* associated with it. The `length()` method returns the *number of elements* in the vector:
+
+```{r}
+#| echo: true
+#| eval: false
+set.seed(0)
+x <- vector(length = sample(100000, 1))
+```
+
+**Q**: What is the length of this vector?
+
+The name of `c()` method is a *shorthand* for *concatenate* - it tries to *combine* all it's arguments into one vector:
+
+```{r}
+#| echo: true
+#| eval: false
+bools  <- c(TRUE, FALSE)
+nums   <- c(0, 1)
+whoami <- c(nums, bools)
+```
+
+**Q**: What is the result of the last line? Why we got these results? 
+
+## Vectors: Vectorized operations
+
+*Most* of the operations and functions in R are *vectorized*. It simply means that unlike other languages, you don't need to iterate over each element of the vector to apply the same operation over it. You can do it at once, on the entire vector:
+
+```{r}
+#| echo: true
+#| eval: false
+x <- 1:100
+x - 1
+x * 2
+x^2
+```
+
+**Q**: Execute expression `x - x`, explain the result. Execute the expression `x - x[1:50]` can you explain the result? Sum two subsets of `x`, i.e. execute `x[1:49] + x[99:51]`. Examining the result can you find the sum of all elements of `x`?
+
+## Vectors: Useful functions on vectors
+
+There are many useful *functions* shipped with Base R, which might be applied to the vectors. Below is only the small subset of them:
+
+```{r}
+#| echo: true
+#| eval: false
+set.seed(0)
+x <- sample(100, 10, TRUE)
+sum(x)    # sum of all elements
+prod(x)   # product of all elements
+mean(x)   # expected value of x
+median(x) # median of x
+sample(x) # random rearrangement of x
+```
+You can find detailed description of the functions listed above (and any other function!) with `?<function name>` syntax.
+
+**Q**: In your console enter `?sort` and sort out what this function does?
