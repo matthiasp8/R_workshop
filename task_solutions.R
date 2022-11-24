@@ -49,9 +49,6 @@ ggplotly(p)
 library(ggridges)
 library(ggplot2)
 
-#head(diamonds)
-
-# basic example
 french_fries_long <- melt(french_fries, id.vars = c("time", "treatment", "subject", "rep"))
 french_fries_long %>% ggplot(aes(x = value, y = variable, fill = variable)) +
   geom_density_ridges() +

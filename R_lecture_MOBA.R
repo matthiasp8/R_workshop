@@ -9,11 +9,12 @@ library("tidyverse")
 ################
 
 # basic calculations
+x = 1 + 2
 x <- 1 + 2
 x
 
 # vectors
-x <- c(1,1,2.5,3.4)
+x <- c(1, 1, 2.5, 3.4)
 x
 y <- c("a", "b", "c")
 y
@@ -64,6 +65,7 @@ colMeans(m)
 # apply function
 apply(m,2,mean)
 colMeans(m)
+t(m)
 #apply can be also used for more fancy calculations - another lesson
 
 # matrix subsetting
@@ -96,9 +98,10 @@ mixed_list
 
 # in general: read files
 phenotypes <- read.csv2("/data/orga/MOBAcourses/220919_ggplot2_introduction/phenotypes.csv", row.names=1)
+#norm_reads <- read.csv2("/data/datasets/rna_seq/2203__4__rna_seq__PAO1_pleD__LBpl__Sarina/edgeR/PAO1_pleD/edgeR_normalized_reads.csv", row.names = 1)
 
 # data sets implemented in R
-data()
+#data()
 head(iris)
 str(iris)
 
@@ -128,15 +131,14 @@ dcast(tab_long, Var2 ~ Var1)
 
 tab_wide <- dcast(tab_long, Var2 ~ Var1)
 class(tab_wide)
-head(tab_wide)
 #use first culumn as rownames
-tab_wide2 <- column_to_rownames(tab_wide)
+tab_wide2 <- column_to_rownames(tab_wide, var = "Var2")
 head(tab_wide2)
 
-#another approach (in standard R library)
+#another approach (than dcast) in standard R library
 x<-reshape(tab_long, idvar = "Var1", timevar = "Var2", direction = "wide")
 x
-#reshape(tab_long, idvar = "Var2", timevar = "Var1", direction = "wide")
+
 
 #########################
 # some more usefull functions to prepare data for ggplot2
@@ -168,7 +170,7 @@ str(iris_reordered)
 
 tab_long   %>% 
   dcast(Var2 ~ Var1)  %>%  
-  column_to_rownames() %>% 
+  column_to_rownames(var = "Var2") %>% 
   as.matrix() %>% 
   colSums()
 
@@ -206,11 +208,9 @@ iris_long %>%
 # Standard R plot function
 plot(x=iris$Sepal.Length, y= iris$Sepal.Width)
 
-
 # heatmaps
 library(pheatmap)
 pheatmap(m)
-
 
 ###################
 # ggplot2
@@ -232,6 +232,12 @@ p + geom_point()
 
 p + geom_violin() + geom_jitter(width = 0.2, size = 4, alpha = 0.6)
 
+
+#######
+# change theme
+########
+p + geom_violin() + geom_jitter(width = 0.2, size = 4, alpha = 0.6) + theme_bw()
+
 ######
 # save plot
 ######
@@ -249,31 +255,21 @@ browseURL("test.pdf")
 # https://www.rstudio.com/resources/cheatsheets/
 # https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf
 
+# example from https://r-charts.com/
 
-#################
-#Tasks: 
-#################
+library(ggplot2)
 
-# to do: make some plots using the links above and show them as tasks
-
-
-
-#############
-#excursion - statistics using ggpubr
-##############
-library("ggpubr")
-
-my_comparisons <- list( c("0", "1"), c("1", "2"), c("0", "2") )
-phenotypes %>%
-  drop_na() %>%
-  ggboxplot(x = "Margin.0_1_2", y = "Survival.24", color="Margin.0_1_2",
-            palette = "jco")+ 
-  stat_compare_means(comparisons = my_comparisons)+ # Add pairwise comparisons p-value
-  stat_compare_means(label.y = 150)     # Add global p-value
+ggplot(warpbreaks, aes(x = tension, y = breaks, color = tension)) +
+  geom_violin(trim = FALSE) +
+  geom_boxplot(width = 0.07)
 
 
+###########################################
+# Tasks
+##########################################
 
-#if there is time: left: (t,l,s)apply
+#make these plots using "https://r-graph-gallery.com/" and "https://r-charts.com/"
 
+#######################################
+# topics for future: stats in R, (t,l,s)apply, linear regression, define functions etc. --> other preferences?
 
-#topics for future: stats in R - (t,l,s)apply, linear regression, define functions etc.
