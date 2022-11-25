@@ -1,4 +1,18 @@
 
+##############################
+# PART II
+##############################
+
+DNAse_new <- DNase %>% 
+  melt(measure.var=c("conc","density")) %>% 
+  group_by(Run,variable) %>%  
+  summarise(median = median(value), log2 = log2(value))
+
+
+################################
+# PART III
+################################
+
 ###################
 # plot 1
 ###################
@@ -41,19 +55,32 @@ p <- iris %>%
 
 ggplotly(p)
 
-
 ###########################
-# plot 3
+# plot 4
 ###########################
 
 # library
 library(ggridges)
 library(ggplot2)
 
+#bring into long format
 french_fries_long <- melt(french_fries, id.vars = c("time", "treatment", "subject", "rep"))
-french_fries_long %>% ggplot(aes(x = value, y = variable, fill = variable)) +
+
+str(french_fries_long)
+french_fries_long <- french_fries_long %>% mutate(variable = factor(variable, levels=sort(levels(french_fries_long$variable)))) 
+
+french_fries_long %>%
+  ggplot(aes(x = value, y = variable, fill = variable)) +
   geom_density_ridges() +
   theme_ridges() + 
-  theme(legend.position = "none")
+  theme(legend.position = "none", axis.title.x = element_text(hjust= 0.5)) +
+  ylab("") 
+
 
 #hints: https://r-graph-gallery.com/
+
+
+
+
+
+
