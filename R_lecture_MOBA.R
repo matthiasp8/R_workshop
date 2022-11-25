@@ -236,14 +236,10 @@ iris_reordered %>% ggplot(aes(x=Species, y=Petal.Width, color=Petal.Length, size
 # Tasks
 #################
 
+# 1)
 # Transform the table DNase into a long format using conc and density as "measure.var".
 # add new columns with the median and log2 for "Run" and "variable"
 # call the new object DNAse_new
-
-DNAse_new <- DNase %>% 
-  melt(measure.var=c("conc","density")) %>% 
-  group_by(Run,variable) %>%  
-  summarise(median = median(value), log2 = log2(value))
 
 
 ##############################################

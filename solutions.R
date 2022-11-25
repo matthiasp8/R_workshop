@@ -3,6 +3,7 @@
 # PART II
 ##############################
 
+# 1)
 DNAse_new <- DNase %>% 
   melt(measure.var=c("conc","density")) %>% 
   group_by(Run,variable) %>%  
