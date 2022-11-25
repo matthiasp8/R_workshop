@@ -24,6 +24,8 @@ ggplot(iris, aes(x=Petal.Length, y=Petal.Width, color=Species)) +
 
 # hint: https://r-charts.com/ --> correlation
 
+ggsave("part3_task_plot1.pdf", width = 6, height = 4)
+browseURL("part3_task_plot1.pdf")
 
 ########################
 # plot 2
@@ -42,6 +44,9 @@ ggplotly(p)
 
 #hints: https://r-graph-gallery.com/ --> general knowledge --> interactive charts
 
+#new: if saving is needed
+htmlwidgets::saveWidget(ggplotly(p), "part3_task_plot2.html")
+browseURL("part3_task_plot2.html")
 
 ######################
 # plot 3 - combine 1 and 2
@@ -54,6 +59,10 @@ p <- iris %>%
   theme_bw()
 
 ggplotly(p)
+
+#new: if saving is needed
+htmlwidgets::saveWidget(ggplotly(p), "part3_task_plot3.html")
+browseURL("part3_task_plot3.html")
 
 ###########################
 # plot 4
@@ -79,7 +88,8 @@ french_fries_long %>%
 
 #hints: https://r-graph-gallery.com/
 
-
+ggsave("part3_task_plot4.pdf", width = 6, height = 4)
+browseURL("part3_task_plot4.pdf")
 
 
 
