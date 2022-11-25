@@ -7,7 +7,7 @@
 DNAse_new <- DNase %>% 
   melt(measure.var=c("conc","density")) %>% 
   group_by(Run,variable) %>%  
-  summarise(median = median(value), log2 = log2(value))
+  summarise(value=value, median = median(value), log2 = log2(value))
 
 
 ################################
@@ -93,5 +93,19 @@ ggsave("part3_task_plot4.pdf", width = 6, height = 4)
 browseURL("part3_task_plot4.pdf")
 
 
+####################
+# plot 5 
+##################
 
+# plot
+DNase %>% 
+  melt() %>% 
+  ggplot(aes(x=variable, y=value, fill=variable)) +
+  geom_boxplot(alpha=0.7) +
+  stat_summary(fun=mean, geom="point", shape=20, size=14, color="red", fill="red") +
+  theme(legend.position="none") +
+  scale_fill_brewer(palette="Set1") 
+  
+ggsave("part3_task_plot5.pdf", width = 6, height = 4)
+browseURL("part3_task_plot5.pdf")
 
