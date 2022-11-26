@@ -54,7 +54,7 @@ y[2]
 
 random_numbers <- rnorm(15) #normal distribution with mean = 0
 random_numbers
-m <- matrix(random_numbers,ncol=3)
+m <- matrix(random_numbers, ncol=3)
 m
 colnames(m)
 colnames(m) <- y
@@ -65,7 +65,7 @@ m
 
 # matrix subsetting
 # second column
-m[,2]
+m[,1]
 #third row
 m[3,]
 # number in third row and first column
@@ -77,9 +77,7 @@ rowSums(m)
 colSums(m)
 colMeans(m)
 
-# different functions take different classes:
-?colnames()
-?mean()
+# different functions take different classes
 
 # apply function
 apply(m,2,mean)
@@ -96,7 +94,9 @@ str(df)
 head(df)
 tail(df)
 
-df$a
+#subset a data frame
+df$b
+df[,2]
 
 ################
 # lists
@@ -146,14 +146,15 @@ str(iris)
 library("reshape2")
 
 # melt - convert data into long format
-melt.data.frame(french_fries, id.vars = c("time", "treatment", "subject", "rep"))
+head(french_fries)
 french_fries_long <- melt(french_fries, measure.vars = c("potato", "buttery", "grassy", "rancid", "painty"))
+melt(french_fries, id.vars = c("time", "treatment", "subject", "rep"))
 
 # convert matrix into long format
 tab_long <- melt(m)
 tab_long
 class(tab_long)
-str(tab_long)
+#str(tab_long)
 
 #and back to matrix again
 tab_wide <- dcast(tab_long, Var1 ~ Var2)
@@ -161,7 +162,7 @@ tab_wide <- dcast(tab_long, Var1 ~ Var2)
 
 head(tab_wide)
 
-#use first culumn as rownames
+#use first column as rownames
 column_to_rownames(tab_wide, var = "Var1")
 
 
@@ -174,14 +175,17 @@ column_to_rownames(tab_wide, var = "Var1")
 ##################
 
 #without pipe
-#tab_long2 <- dcast(tab_long, Var2 ~ Var1)
-#tab_long3 <- column_to_rownames(tab_long2, var = "Var2")
-# ...
+tab_wide <- dcast(tab_long, Var1 ~ Var2)
+tab_wide2 <- column_to_rownames(tab_wide, var = "Var1")
+colSums(tab_wide2)
 
-tab_long   %>% 
-  dcast(Var2 ~ Var1)  %>%  
-  column_to_rownames(var = "Var2") %>% 
-  as.matrix() %>% 
+#or 
+colSums(column_to_rownames(dcast(tab_long, Var1 ~ Var2), var = "Var1"))
+
+#pipe
+tab_long %>% 
+  dcast(Var1 ~ Var2) %>% 
+  column_to_rownames(var = "Var1") %>% 
   colSums()
 
 
@@ -192,6 +196,7 @@ tab_long   %>%
 ################
 
 iris_long <- melt(iris)
+head(iris_long)
 
 # summarize iris_long data frame
 iris_long %>%
@@ -237,7 +242,7 @@ iris_reordered %>% ggplot(aes(x=Species, y=Petal.Width, color=Petal.Length, size
 #################
 
 # 1)
-# Transform the table DNase into a long format using conc and density as "measure.var".
+# Transform the table DNase into a long format using "conc" and "density" as "measure.var".
 # add new columns with the median and log2 for "Run" and "variable"
 # call the new object DNAse_new
 
@@ -253,14 +258,14 @@ iris_reordered %>% ggplot(aes(x=Species, y=Petal.Width, color=Petal.Length, size
 p <- iris %>% ggplot(aes(x=Species, y=Petal.Width, color=Petal.Length, size=Sepal.Length))
 
 # add geom and plot p
-p + geom_point()
+p + geom_point() 
 
 
 ##########
 #  add more layers
 #################
 
-p + geom_violin() + geom_jitter(width = 0.2, size = 4, alpha = 0.6)
+p + geom_violin() + geom_jitter(width = 0.2, size = 4, alpha = 0.6) 
 
 
 #######
@@ -289,9 +294,10 @@ browseURL("test.pdf")
 
 library(ggplot2)
 
-ggplot(warpbreaks, aes(x = tension, y = breaks, color = tension)) +
+
+ggplot(iris_long, aes(x = Species, y = value, color = Species)) +
   geom_violin(trim = FALSE) +
-  geom_boxplot(width = 0.07)
+  geom_boxplot(width = 0.07) + theme_classic()
 
 
 ###########################################
