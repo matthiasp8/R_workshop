@@ -54,7 +54,7 @@ y[2]
 
 random_numbers <- rnorm(15) #normal distribution with mean = 0
 random_numbers
-m <- matrix(random_numbers, ncol=3)
+m <- matrix(random_numbers, ncol = 3)
 m
 colnames(m)
 colnames(m) <- y
@@ -65,11 +65,11 @@ m
 
 # matrix subsetting
 # second column
-m[,1]
+m[, 1]
 #third row
-m[3,]
+m[3, ]
 # number in third row and first column
-m[3,1]
+m[3, 1]
 
 # functions for matrices
 t(m)
@@ -80,7 +80,7 @@ colMeans(m)
 # different functions take different classes
 
 # apply function
-apply(m,2,mean)
+apply(m, 2, mean)
 colMeans(m)
 #apply can be also used for more fancy calculations - another lesson
 
@@ -96,23 +96,23 @@ tail(df)
 
 #subset a data frame
 df$b
-df[,2]
+df[, 2]
 
 ################
 # lists
 ###############
 
 # list of matrices
-matrix_list <- list(m,m)
+matrix_list <- list(m, m)
 names(matrix_list) <- c("matrix", "same_matrix")
 matrix_list
 
-mixed_list <- list(m,m, df)
+mixed_list <- list(m, m, df)
 names(mixed_list) <- c("matrix", "same_matrix", "data_frame")
 mixed_list
 
 # list subsetting
-mixed_list[[1]][2,1]
+mixed_list[[1]][2, 1]
 
 ##############
 # load data
@@ -223,19 +223,24 @@ iris_long %>%
 ##########################
 
 # convert several columns as factors - e.g. if there are "numeric data" that are actually not numeric
-phenotypes <- phenotypes %>% mutate_at(vars(Colony.size.1_4,Margin.0_1_2), as.factor)
+phenotypes <- phenotypes %>% mutate_at(vars(Colony.size.1_4, Margin.0_1_2), as.factor)
 
 str(phenotypes)
 
 # reorder factors
-iris %>% ggplot(aes(x=Species, y=Petal.Width, color=Petal.Length, size=Sepal.Length)) + geom_point()
+iris %>% 
+    ggplot(aes(x = Species, y = Petal.Width, color = Petal.Length, size  = Sepal.Length)) + 
+    geom_point()
 
 str(iris)
-iris_reordered <- iris %>% mutate(Species = factor(Species, levels=c("virginica", "versicolor","setosa"))) 
+iris_reordered <- iris %>% 
+    mutate(Species = factor(Species, levels=c("virginica", "versicolor","setosa"))) 
+
 str(iris_reordered)
 
-iris_reordered %>% ggplot(aes(x=Species, y=Petal.Width, color=Petal.Length, size=Sepal.Length)) + geom_point()
-
+iris_reordered %>% 
+    ggplot(aes(x = Species, y = Petal.Width, color = Petal.Length, size = Sepal.Length)) + 
+    geom_point()
 
 ##################
 # Tasks
@@ -255,7 +260,7 @@ iris_reordered %>% ggplot(aes(x=Species, y=Petal.Width, color=Petal.Length, size
 # reminder - make a plot object, add aestetics and save the object as p (see ggplot_introduction.R)
 #############
 
-p <- iris %>% ggplot(aes(x=Species, y=Petal.Width, color=Petal.Length, size=Sepal.Length))
+p <- iris %>% ggplot(aes(x = Species, y = Petal.Width, color = Petal.Length, size = Sepal.Length))
 
 # add geom and plot p
 p + geom_point() 
@@ -297,7 +302,8 @@ library(ggplot2)
 
 ggplot(iris_long, aes(x = Species, y = value, color = Species)) +
   geom_violin(trim = FALSE) +
-  geom_boxplot(width = 0.07) + theme_classic()
+  geom_boxplot(width = 0.07) + 
+  theme_classic()
 
 
 ###########################################
@@ -332,7 +338,7 @@ ggplot(iris_long, aes(x = Species, y = value, color = Species)) +
 #####################################
 
 # Standard R plot function
-plot(x=iris$Sepal.Length, y= iris$Sepal.Width)
+plot(x = iris$Sepal.Length, y = iris$Sepal.Width)
 
 # heatmaps
 library(pheatmap)
