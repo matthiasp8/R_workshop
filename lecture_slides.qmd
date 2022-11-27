@@ -34,41 +34,6 @@ x %/% y
 ```
 **Q**: Arithmetic operations are *unary* and *binary*. What are those?
 
-
-## Arithmetic Operations
-
-These two operations, called *modulo division* (`%%`) and *integer division* (`%/%`) might be new for you. 
-
-Can you explain the results returned (try it into your console)?
-
-```{r}
-#| echo: true
-#| eval: false
-5  %% 3
-8  %% 3
-11 %% 3
-```
-
-And what if we replace *modulo division* by *integer division*? 
-
-```{r}
-#| echo: true
-#| eval: false
-5  %/% 3
-8  %/% 3
-11 %/% 3
-```
-
-Got stuck? There is a hint:
-
-```{r}
-#| echo: true
-#| eval: false
-3 %%  3
-3 %/% 3
-```
-
-
 ## Variables
 
 Think about the variable as a cell, or basket *where you store the data*. Well, really it's a *name* you choose to call a *memory slot* where your data stored. *Pointer* if it makes a point?
@@ -141,13 +106,11 @@ We can store other things in vectors: `character`s, `boolean`s, `complex` number
 #| eval: false
 
 nums  <- c(1, -1, 1, -1, 1, -1)
-chars <- c('a', 'b', 'c', '\U1F353', 'I am a string', '\U1F3F4', '', NA_character_)
+chars <- c('a', 'b', 'c', '\U1F353', 'I am a string')
 bools <- c(TRUE, FALSE, TRUE, TRUE, TRUE == FALSE)
-z     <- complex(real = 1:3, imaginary = 2:4)
-funcs <- c(`+`, `-`, c, length)
 ```
 
-**Q**: What is the output of `funcs[[2]](nums)`? 
+**Q**: What is the fourth entry of `chars`? 
 
 ## Vectors: length, c
 
@@ -199,11 +162,51 @@ There are many useful *functions* shipped with Base R, which might be applied to
 set.seed(0)
 x <- sample(100, 10, TRUE)
 sum(x)    # sum of all elements
-prod(x)   # product of all elements
 mean(x)   # expected value of x
 median(x) # median of x
-sample(x) # random rearrangement of x
 ```
 You can find detailed description of the functions listed above (and any other function!) with `?<function name>` syntax.
 
-**Q**: In your console enter `?sort` and sort out what this function does?
+## Matrix
+
+- *Matrix* is just an *array* of vectors! 
+- A `matrix` is *homogeneous* - it contains data of the *same* type;
+- A `matrix` has *rows* and *columns*, with rows and columns *names* and *indices* associated with them;
+- All the operations / functions defined on vectors are defined on matrices and more...;
+
+And remember nearly *everything* in R is *vectorized* 🚀.
+
+## Matrix 
+
+Run an example
+
+```{r}
+#| echo: true
+#| eval: false
+set.seed(0)
+m <- matrix(
+    c(2, 7, 6, 9, 5, 1, 4, 3, 8),
+    ncol = 3,
+    byrow = TRUE
+)
+
+nrow(m)
+ncol(m)
+```
+
+**Q**: What is the `sum()` of all the matrix elements? 
+
+**Q**: Run the code below in your console. Explain the result.
+
+```{r}
+#| echo: true
+#| eval: false
+m[1, 1] <- '\U1F575'
+rowSums(m)
+```
+
+
+
+
+
+
