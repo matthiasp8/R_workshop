@@ -54,14 +54,16 @@ y[2]
 
 random_numbers <- rnorm(15) #normal distribution with mean = 0
 random_numbers
+
 m <- matrix(random_numbers, ncol = 3)
 m
+
 colnames(m)
 colnames(m) <- y
 m
+
 rownames(m) <- LETTERS[1:5]
 m
-
 
 # matrix subsetting
 # second column
@@ -77,30 +79,21 @@ rowSums(m)
 colSums(m)
 colMeans(m)
 
+# DS: Slides Matrix 1-2 (2 minutes)
+
 # different functions take different classes
 
 # apply function
 apply(m, 2, mean)
 colMeans(m)
+
 #apply can be also used for more fancy calculations - another lesson
-
-
-#############
-# data.frame - table with mixed classes
-##############
-df <- data.frame(m, characters = letters[1:5], factor = as.factor(c("A", "A", "B", "C", "C")))
-df
-str(df)
-head(df)
-tail(df)
-
-#subset a data frame
-df$b
-df[, 2]
 
 ################
 # lists
 ###############
+
+# DS slides: Quick intro to the lists (1 slide, 30 seconds)
 
 # list of matrices
 matrix_list <- list(m, m)
@@ -113,6 +106,20 @@ mixed_list
 
 # list subsetting
 mixed_list[[1]][2, 1]
+
+#############
+# data.frame - table with mixed classes
+##############
+
+df <- data.frame(m, characters = letters[1:5], factor = as.factor(c("A", "A", "B", "C", "C")))
+df
+str(df)
+head(df)
+tail(df)
+
+#subset a data frame
+df$b
+df[, 2]
 
 ##############
 # load data

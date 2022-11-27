@@ -170,6 +170,7 @@ You can find detailed description of the functions listed above (and any other f
 ## Matrix
 
 - *Matrix* is just an *array* of vectors! 
+- A `matrix` contains vectors of the same length;
 - A `matrix` is *homogeneous* - it contains data of the *same* type;
 - A `matrix` has *rows* and *columns*, with rows and columns *names* and *indices* associated with them;
 - All the operations / functions defined on vectors are defined on matrices and more...;
@@ -206,7 +207,30 @@ rowSums(m)
 ```
 
 
+## List
 
+- `list` can contain *different* data types of *different length*;
+- `list` can be *empty*, *flat* or *nested* and the values can be accessed by *indices / names*;
+- Functions and operations in R *generally* are not vectorized over the lists$^1$! 
 
+```{r}
+#| echo: false
+#| eval: true
+lst <- list(
+    fruits  = c(orange = '\U1F34A', lemon = '\U1F34B', banana = '\U1F34C'),
+    drinks  = c(wine = '\U1F377', milk = '\U1F95B'),
+    wallet  = list(
+        '\U20AC' = 24,
+        '\U0024' = 8,
+        '\U20B4' = 1991
+    )
+)
+
+dplyr::glimpse(lst)
+```
+
+:::: footer
+$^1$You have to *iterate* over them - this is where functions from `-apply` family shine 🚀!
+::::
 
 
