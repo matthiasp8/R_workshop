@@ -111,6 +111,8 @@ mixed_list[[1]][2, 1]
 # data.frame - table with mixed classes
 ##############
 
+# DS: Introductory slide for data.frame (30 s)
+
 df <- data.frame(m, characters = letters[1:5], factor = as.factor(c("A", "A", "B", "C", "C")))
 df
 str(df)
@@ -126,19 +128,21 @@ df[, 2]
 ###############
 
 # in general: read files
-phenotypes <- read.csv2("/data/orga/MOBAcourses/220919_ggplot2_introduction/phenotypes.csv", row.names=1)
+phenotypes <- read.csv2("/data/orga/MOBAcourses/220919_ggplot2_introduction/phenotypes.csv", row.names = TRUE)
 #norm_reads <- read.csv2("/data/datasets/rna_seq/2203__4__rna_seq__PAO1_pleD__LBpl__Sarina/edgeR/PAO1_pleD/edgeR_normalized_reads.csv", row.names = 1)
 
 # data sets implemented in R
 data()
+
+# exploring the iris data set
+data(iris)
+
 head(iris)
 str(iris)
 
 ###################
 # Tasks - by Dmytro
 ##################
-
-
 
 
 ###############################################

@@ -233,4 +233,71 @@ dplyr::glimpse(lst)
 $^1$You have to *iterate* over them - this is where functions from `-apply` family shine 🚀!
 ::::
 
+## `data.frame`
+
+- A `data.frame` is a `list` of vectors of *equal length*;
+- Think about it as a *table* with rows (*samples / trials*) and columns (*variables*);
+- Anything applicable to the *vectors* and *lists* is applicable to the `data.frame`;
+
+```{r}
+#| echo: true
+#| eval: true
+
+data.frame(
+    fruits = lst$fruits,
+    money  = sapply(lst$wallet, I),
+    unit   = names(lst$wallet)
+)
+```
+
+## Iris data
+
+1. Load the `iris` data into your environment;
+2. Use one of the functions explained above, to find:
+  1.1 Number of `sentosa` species in the data set;
+  1.2 Max `Petal.Length` in the data set;
+  1.3 Average `Sepal.Width` in the data set;
+3. Call `boxplot(iris)` and find what is wrong with this representation;
+
+## Iris data
+
+Load the data:
+```{r}
+#| echo: true
+#| eval: true
+data(iris)
+```
+
+Use the `summary` built-in function, to get the summary statistics:
+```{r}
+#| echo: true
+#| eval: true
+summary(iris)
+```
+
+## Iris data
+
+```{r}
+par(
+    lwd = .5,
+    col.axis = 'gray25',
+    col.lab  = 'gray25',
+    col.main = 'gray25',
+    col.sub = 'gray50',
+    family  = 'mono',
+    pty = 's',
+    tcl = -.1
+)
+```
+
+Plot the data:
+```{r}
+#| echo: true
+#| eval: true
+boxplot(
+    iris,
+    col  = 'white',
+    notch = TRUE
+)
+```
 
