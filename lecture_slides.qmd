@@ -301,3 +301,32 @@ boxplot(
 )
 ```
 
+## Part II task 
+
+1. Attach a `DNAse` data;
+2. Convert `DNAse` data set from wide to long format. Use `conc` and `density` as a `measure.vars`;
+3. Add new columns calculating the `median()` and `log2()` for `Run` and `variable`;
+4. All the new object `DNAse_new`;
+
+## Part III theme() trick
+
+You can set your theme at the begining of the script, so you don't have to call everytime you make a plot:
+
+```{r}
+#| echo: true
+#| eval: false
+theme_set(
+  ggthemes::thme_fiew()
+)
+```
+
+## Part III Tasks
+
+Make plots using: [https://r-graph-gallery.com/](https://r-graph-gallery.com/), [https://r-charts.com/](https://r-charts.com/).
+
+1. Plot 1: `iris` using exaple from `r-charts.com`;
+2. Plot 2: `iris` using example from `r-graph-gallery.com`;
+3. Plot 3: `iris` data set, bake your own graph!
+4. Plot 4: `french_fries` data set using example from [https://r-graph-gallery.com/](https://r-graph-gallery.com/);
+5. Plot 5: `DNAse` data set using example from [https://r-graph-gallery.com/](https://r-graph-gallery.com/);
+
